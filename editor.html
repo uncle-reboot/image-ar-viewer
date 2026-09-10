@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Image AR — editor</title>
+  <style>
+    :root { --bg:#16181d; --panel:#1f2229; --line:#2c3038; --fg:#e6e6e6; --muted:#8a919c; --acc:#4f8cff; }
+    * { box-sizing: border-box; }
+    html, body { margin:0; height:100%; background:var(--bg); color:var(--fg); font:13px/1.4 system-ui, sans-serif; }
+    #app { display:grid; grid-template-columns: 240px 1fr 280px; grid-template-rows: 44px 1fr; height:100%; }
+    header { grid-column:1/4; display:flex; align-items:center; gap:10px; padding:0 12px; background:var(--panel); border-bottom:1px solid var(--line); }
+    header b { margin-right:auto; }
+    button { background:#2a2e37; color:var(--fg); border:1px solid var(--line); border-radius:6px; padding:6px 10px; cursor:pointer; }
+    button:hover { border-color:var(--acc); }
+    button.primary { background:var(--acc); border-color:var(--acc); color:#fff; }
+    button:disabled { opacity:.4; cursor:default; }
+    aside { background:var(--panel); overflow:auto; padding:10px; }
+    aside h4 { margin:8px 0 6px; color:var(--muted); font-weight:600; text-transform:uppercase; font-size:11px; letter-spacing:.04em; }
+    #left { border-right:1px solid var(--line); }
+    #right { border-left:1px solid var(--line); }
+    #viewport { position:relative; min-width:0; }
+    #viewport canvas { display:block; }
+    #objects { list-style:none; margin:0; padding:0; }
+    #objects li { display:flex; align-items:center; gap:6px; padding:6px 8px; border-radius:6px; cursor:pointer; }
+    #objects li.sel { background:#2a3a5a; }
+    #objects li .nm { flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    #objects li small { color:var(--muted); }
+    .row { display:grid; grid-template-columns: 70px 1fr; align-items:center; gap:8px; margin:6px 0; }
+    .row label { color:var(--muted); }
+    .row input[type=range] { width:100%; }
+    .row input[type=text], .row select { width:100%; background:#14161a; color:var(--fg); border:1px solid var(--line); border-radius:4px; padding:5px; }
+    .row output { font-variant-numeric: tabular-nums; color:var(--muted); font-size:11px; }
+    #hint { position:absolute; left:10px; bottom:10px; color:var(--muted); font-size:12px; background:rgba(0,0,0,.4); padding:4px 8px; border-radius:6px; pointer-events:none; }
+    #budget { font-size:11px; color:var(--muted); }
+    #qr { text-align:center; padding:8px 0; }
+    #qr img { width:160px; height:160px; background:#fff; border-radius:6px; }
+    #qr a { color:var(--acc); font-size:11px; word-break:break-all; }
+    .empty { color:var(--muted); padding:20px 8px; text-align:center; }
+  </style>
+  <script type="module" crossorigin src="/image-ar-viewer/assets/editor-R1o8A4jD.js"></script>
+  <link rel="modulepreload" crossorigin href="/image-ar-viewer/assets/measure-DVbi3P-c.js">
+</head>
+<body>
+<div id="app">
+  <header>
+    <b>Image AR — editor</b>
+    <span id="budget"></span>
+    <button id="undo" title="Undo (Ctrl+Z)">↶ Undo</button>
+    <button id="redo" title="Redo (Ctrl+Y)">↷ Redo</button>
+    <button id="preview">▶ Preview</button>
+    <button id="publish" class="primary">Publish</button>
+  </header>
+
+  <aside id="left">
+    <h4>Target</h4>
+    <div id="target-info" class="empty">Loading target…</div>
+    <h4>3D models <button id="add-model" style="float:right;padding:2px 8px">+ Add</button></h4>
+    <input id="model-file" type="file" accept=".glb,model/gltf-binary" hidden />
+    <ul id="objects"><li class="empty">No objects yet — click + Add</li></ul>
+    <h4>Audio</h4>
+    <input id="audio-file" type="file" accept="audio/*" hidden />
+    <div class="row"><label>Scene</label><button id="add-audio">+ Bind audio…</button></div>
+    <div id="audio-info" class="empty" style="padding:4px">none</div>
+  </aside>
+
+  <main id="viewport"><div id="hint">Drag to move on the surface · wheel = height · click empty to deselect</div></main>
+
+  <aside id="right">
+    <h4>Selected</h4>
+    <div id="props"><div class="empty">Nothing selected</div></div>
+    <h4>Publish</h4>
+    <div id="qr" class="empty">Publish to get a QR</div>
+  </aside>
+</div>
+</body>
+</html>

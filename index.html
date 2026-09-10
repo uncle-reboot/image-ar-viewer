@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Image AR — viewer</title>
+  <style>
+    html, body { margin: 0; height: 100%; background: #000; color: #fff; font-family: system-ui, sans-serif; overflow: hidden; }
+    #ar { position: fixed; inset: 0; }
+    #start { position: fixed; inset: 0; display: grid; place-items: center; background: #111; z-index: 10; }
+    #start button { font-size: 1.25rem; padding: 1rem 2rem; border-radius: 12px; border: 0; background: #fff; color: #000; }
+    #hud { position: fixed; top: env(safe-area-inset-top, 8px); left: 8px; right: 8px; font-size: 13px; z-index: 5;
+           background: rgba(0,0,0,.55); padding: 6px 10px; border-radius: 8px; white-space: pre-line; }
+  </style>
+  <script type="module" crossorigin src="/image-ar-viewer/assets/viewer-C-qHck_h.js"></script>
+  <link rel="modulepreload" crossorigin href="/image-ar-viewer/assets/measure-DVbi3P-c.js">
+</head>
+<body>
+  <div id="start"><button id="go">Tap to start</button></div>
+  <div id="hud">idle</div>
+  <div id="ar"></div>
+</body>
+</html>
